@@ -8,8 +8,11 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.0.24",
+    "@web3-react/abstract-connector": "^6.0.7",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.1.9",
     "axios": "^0.21.1",
-    "eslint": "^7.22.0",
     "i18next": "^19.9.2",
     "i18next-browser-languagedetector": "^6.0.1",
     "next": "latest",
@@ -23,7 +26,18 @@
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
-    "typescript": "4.0"
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.0.7"
   },
   "license": "MIT"
 }

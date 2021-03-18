@@ -1,6 +1,10 @@
 {
   "plugins": ["prettier", "@typescript-eslint"],
-  "extends": ["airbnb-typescript", "react-app", "prettier"],
+  "extends": [
+    "airbnb-typescript", 
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -9,10 +13,14 @@
     "import/resolver": {
       "typescript": {
         "alwaysTryTypes": true
+      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   },
   "rules": {
+    "semi": 1,
     "jsx-a11y/label-has-associated-control": "warn",
     "jsx-a11y/click-events-have-key-events": 0,
     "import/no-named-as-default": 0,
@@ -53,6 +61,16 @@
       }
     ],
     "react/jsx-key": "error",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ],
     "import/no-extraneous-dependencies": [
       "error",
       {
