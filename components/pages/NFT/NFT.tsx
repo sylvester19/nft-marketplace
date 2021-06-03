@@ -96,12 +96,26 @@ const NFTPage: React.FC<NFTPageProps> = ({
               </div>
             </div>
             <div className={style.BuyRight}>
-              <div className={style.Price}>
+              {computeCaps(Number(NFT.price)) > 0 && <div className={style.Price}>
                 {computeCaps(Number(NFT.price))} CAPS
-              </div>
+              </div>}
               {fiatPrice > 0 && <span className={style.FiatPrice}>{fiatPrice.toFixed(4)}$</span>}
             </div>
           </div>
+
+          {/* ----- NEEDS STYLE FIX----- */}
+          <div className={style.Buy} style={{ alignItems: 'center' }}  >
+            <div className={style.BuyLeft} style={{ marginRight: 20 }}>
+              <div className={style.Button} style={{ backgroundColor: 'white', color: 'black', paddingLeft: 58 }}>
+                Quantity
+              </div>
+            </div>
+            <div >
+              <span className={style.FiatPrice}>{NFT.itemId}/{NFT.itemTotal}</span>
+            </div>
+          </div>
+          {/* -------------------------- */}
+
           <div className={style.HistoryTop}>
             <div className={style.HistoryTitle}>History</div>
             <div className={style.HistoryLine} />
@@ -117,8 +131,8 @@ const NFTPage: React.FC<NFTPageProps> = ({
                       className={style.HistoryIMG}
                     />
                   ) : (
-                    <div className={style.HistoryIMG} style={bgGradientOwner} />
-                  )}
+                      <div className={style.HistoryIMG} style={bgGradientOwner} />
+                    )}
                 </div>
                 <div className={style.HistoryUser}>
                   <div className={style.HistoryRole}>Owner</div>
@@ -137,11 +151,11 @@ const NFTPage: React.FC<NFTPageProps> = ({
                       className={style.HistoryIMG}
                     />
                   ) : (
-                    <div
-                      className={style.HistoryIMG}
-                      style={bgGradientCreator}
-                    />
-                  )}
+                      <div
+                        className={style.HistoryIMG}
+                        style={bgGradientCreator}
+                      />
+                    )}
                 </div>
                 <div className={style.HistoryUser}>
                   <div className={style.HistoryRole}>Creator</div>
