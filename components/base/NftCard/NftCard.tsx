@@ -91,11 +91,13 @@ const NftCard: React.FC<NftCardProps> = ({
       {item.serieId !== '0' &&
         item.itemTotal &&
         (!serieCount || (serieCount && serieCount > 1)) ? (
-          <span className={style.QtyLabel}>{serieCount ?? item.itemTotal}</span>
-        ) : (<span className={style.QtyLabel}>{1}</span>)}
+          <span className={style.QtyLabel}>{serieCount ?? item.itemTotal}+'/1</span>
+        ) : (<span className={style.QtyLabel}>{1/1}</span>)}
       {item.cryptedMedia?.url !== item.media?.url && (
         <span className={style.SecretLabel}>S</span>
       )}
+      {/* <span className={style.SecretLabel}>item.itemTotal {item.itemTotal}</span> */}
+      {/* <span className={style.SecretLabel}>serieCount {serieCount}</span> */}
       <div
         className={
           isHovering
