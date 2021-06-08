@@ -55,6 +55,7 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
 
   const [NFT, setNFT] = useState<File | null>(null);
   const [secretNFT, setSecretNFT] = useState<File | null>(null);
+  const [batch, setBatch] = useState<FileList | null>(null);
   const { name, description, quantity } = NFTData;
   const [QRData, setQRData] = useState({
     links: output,
@@ -110,17 +111,20 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
 
   async function uploadNFT() {
     try {
-      if (!user) {
-        setError('Please login to create an NFT.');
-      }
       if (
         !secretNFT ||
         !name ||
         !description ||
-        (!NFT && !(select === 'Select NFT Option' || select === 'None'))
+        (select === 'SecretBatch' && !batch) ||
+        (!NFT &&
+          !(select === 'Select NFT Option' || select === 'None') &&
+          select !== 'SecretBatch')
       ) {
         throw new Error('Elements are undefined');
       }
+
+      console.log('uploading.');
+      console.log('number of secret files', batch?.length);
 
       const data = new FormData();
       {
@@ -140,7 +144,9 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
       let cryptPromises = [];
       for (let i = 0; i < quantity; i++) {
         const formData = new FormData();
-        formData.append('file', secretNFT);
+        if (select === 'SecretBatch') {
+          formData.append('file', batch![i]);
+        } else formData.append('file', secretNFT);
         cryptPromises.push(
           fetch(`${process.env.NEXT_PUBLIC_SDK_URL}/api/cryptFile`, {
             method: 'POST',
@@ -227,6 +233,8 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
         processFile={processFile}
         setError={setError}
         setProcessed={setProcessed}
+        setBatch={setBatch}
+        batch={batch}
       />
     </>
   );

@@ -28,6 +28,8 @@ export interface CreateProps {
   processFile: () => Promise<void>;
   setError: (s: string) => void;
   setProcessed: (b: boolean) => void;
+  setBatch: (f: FileList) => void;
+  batch: FileList | null;
 }
 
 const Create: React.FC<CreateProps> = ({
@@ -46,6 +48,8 @@ const Create: React.FC<CreateProps> = ({
   processFile,
   setError,
   setProcessed,
+  setBatch,
+  batch,
 }) => {
   const [exp, setExp] = useState(false);
   const [isRN, setIsRN] = useState(false);
@@ -101,7 +105,8 @@ const Create: React.FC<CreateProps> = ({
     if (
       secretNFT!.type.substr(0, 5) === 'image' &&
       select !== 'None' &&
-      select !== 'Secret'
+      select !== 'Secret' &&
+      select !== 'SecretBatch'
     ) {
       processFile();
     } else {
@@ -177,7 +182,7 @@ const Create: React.FC<CreateProps> = ({
                     </div>
                   </div>
                 )}
-                {select === 'Secret' && (
+                {(select === 'Secret' || select === 'SecretBatch') && (
                   <label
                     htmlFor="uploadSecretNFT"
                     className={
@@ -201,10 +206,15 @@ const Create: React.FC<CreateProps> = ({
                     <div className={style.HiddenShell}>
                       <input
                         type="file"
+                        multiple={select === 'SecretBatch'}
                         id="uploadSecretNFT"
                         onChange={(event) => {
                           const { target } = event;
-                          if (target && target.files) setNFT(target.files[0]);
+                          if (target && target.files) {
+                            if (target.files.length === 1)
+                              setNFT(target.files[0]);
+                            else setBatch(target.files);
+                          }
                         }}
                         className={style.HiddenInput}
                         accept=".jpg, .jpeg, .png, .gif, .mp4"
@@ -287,7 +297,15 @@ const Create: React.FC<CreateProps> = ({
                       >
                         Secret
                       </div>
-
+                      <div
+                        className={style.SelectItem}
+                        onClick={() => {
+                          setSelect('SecretBatch');
+                          setExp(false);
+                        }}
+                      >
+                        Secret Batch
+                      </div>
                       {checkType() && (
                         <div
                           className={style.SelectItem}
@@ -311,9 +329,15 @@ const Create: React.FC<CreateProps> = ({
                     </div>
                   )}
                 </div>
-                <Link href="/faq">
-                  <a className={style.Link}>How it works</a>
-                </Link>
+                {select === 'SecretBatch' ? (
+                  <span className={style.Link}>
+                    Nb secret files: {batch ? batch.length : 0}
+                  </span>
+                ) : (
+                  <Link href="/faq">
+                    <a className={style.Link}>How it works</a>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
