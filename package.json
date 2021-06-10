@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@polkadot/util-crypto": "^6.2.1",
+    "@types/react-slick": "^0.23.4",
     "array-shuffle": "^2.0.0",
     "asmcrypto-lite": "^1.1.0",
     "bufferutil": "^4.0.3",
@@ -32,8 +33,10 @@
     "react-dom": "^17.0.2",
     "react-multi-carousel": "^2.6.2",
     "react-responsive": "^8.2.0",
+    "react-slick": "^0.28.1",
     "react-switch": "^6.0.0",
     "skynet-js": "^3.0.2",
+    "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.0.1",
     "utf-8-validate": "^5.0.4",
     "uuid": "^8.3.2"
