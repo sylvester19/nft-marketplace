@@ -11,9 +11,6 @@ import Eye from 'components/assets/eye';
 import { UserType } from 'interfaces/index';
 
 import { NFTProps } from 'pages/create';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export interface CreateProps {
   user: UserType;
@@ -70,26 +67,13 @@ const Create: React.FC<CreateProps> = ({
   ) {
     setNFTData({ ...NFTData, [e.target.name]: e.target.value });
   }
-  const returnBatchPreview = (batch: FileList) => {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    return <div className={``}><Slider {...settings}>
-      {Array.from(batch).map((batchItem) => <div key={batchItem.name}>
-        <img src={URL.createObjectURL(batchItem)} className={``} />
-      </div>)}
-    </Slider>
-    </div>
-  }
-  function returnType(NFTarg: File) {
+
+  function returnType(NFTarg: File, index = undefined) {
     if (NFTarg!.type.substr(0, 5) === 'image')
       return (
         <img
-          className={`${style.IMGBackground}`}
+          className={`${style.IMGBackground} ${index != undefined && style.batchPic}`}
+          style={index != undefined ? { top: `${Number(index) * 2}em` } : {}}
           src={URL.createObjectURL(NFTarg)}
           alt="img"
           id="output"
@@ -143,7 +127,6 @@ const Create: React.FC<CreateProps> = ({
 
   return (
     <div className={style.Container}>
-
       <div className={style.Wrapper}>
         <div className={style.Label}>Coming Soon</div>
         <h2 className={style.Title}>Create NFT</h2>
@@ -156,7 +139,6 @@ const Create: React.FC<CreateProps> = ({
             {/* <div className={style.Label}>Coming Soon</div> */}
           </div>
           <div className={style.Data}>
-
             <div className={style.Left}>
               <label
                 htmlFor="uploadNFT"
@@ -176,9 +158,7 @@ const Create: React.FC<CreateProps> = ({
                   </div>
                 </div>
 
-
                 {secretNFT && returnType(secretNFT)}
-
 
                 <div className={style.HiddenShell}>
                   <input
@@ -212,7 +192,7 @@ const Create: React.FC<CreateProps> = ({
                         : `${style.NFTSPreview} ${style.NFTPreviewBorder}`
                     }
                   >
-                    <div className={(NFT || (batch && batch?.length > 0)) ? style.Hidden : style.NFTSNull}>
+                    <div className={((select === 'SecretBatch' && batch && batch?.length > 0) || NFT) ? style.Hidden : style.NFTSNull}>
                       <div className={style.Label}>Coming soon</div>
                       <Upload className={style.UploadSVG2} />
                       <div className={style.NFTSTips}>
@@ -224,6 +204,7 @@ const Create: React.FC<CreateProps> = ({
                       </div>
                     </div>
                     {select !== 'SecretBatch' && NFT && returnType(NFT)}
+                    {select === 'SecretBatch' && batch && batch.length > 0 && Array.from(batch).map((batchItem, index) => returnType(batchItem, index))}
                     <div className={style.HiddenShell}>
                       <input
                         type="file"
@@ -251,7 +232,6 @@ const Create: React.FC<CreateProps> = ({
                     </div>
                   </label>
                 )}
-                {select === 'SecretBatch' && batch && batch.length > 0 && returnBatchPreview(batch)}
               </label>
             </div>
             <div className={style.Right}>

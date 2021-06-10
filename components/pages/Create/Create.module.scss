@@ -188,6 +188,7 @@
   border-radius: 27px;
   visibility: hidden;
 }
+
 .IMGBackground {
   position: absolute;
   z-index: 1;
@@ -197,21 +198,8 @@
   border-radius: 27px;
 }
 
-.batchContainer {
-  position: absolute;
-  z-index: 1;
-  object-fit: cover;
-  border-radius: 27px;
-}
-
 .batchPic {
-  margin: auto;
-  width: 100%;
-  height: auto;
-}
-
-.batchItem {
-  margin-top: 1em;
+  border: 2px solid white;
 }
 
 .HiddenShell {
