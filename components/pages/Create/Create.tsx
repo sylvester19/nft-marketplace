@@ -31,6 +31,7 @@ export interface CreateProps {
   setProcessed: (b: boolean) => void;
   setBatch: (f: FileList | null) => void;
   batch: FileList | null;
+  isBatch: boolean;
 }
 
 const Create: React.FC<CreateProps> = ({
@@ -51,6 +52,7 @@ const Create: React.FC<CreateProps> = ({
   setProcessed,
   setBatch,
   batch,
+  isBatch = false
 }) => {
   const [exp, setExp] = useState(false);
   const [isRN, setIsRN] = useState(false);
@@ -227,6 +229,7 @@ const Create: React.FC<CreateProps> = ({
                           if (select === 'SecretBatch') {
                             if (target?.files && target.files.length > 0) {
                               setBatch(target.files as FileList);
+                              setNFTData({ ...NFTData, quantity: target.files.length })
                             } else {
                               setBatch(null)
                             }
@@ -281,6 +284,7 @@ const Create: React.FC<CreateProps> = ({
                   onChange={onChange}
                   placeholder="1"
                   className={style.Input}
+                  disabled={isBatch}
                 />
               </div>
 
@@ -324,6 +328,7 @@ const Create: React.FC<CreateProps> = ({
                         onClick={() => {
                           setSelect('SecretBatch');
                           setExp(false);
+                          setNFTData({ ...NFTData, quantity: 0 })
                         }}
                       >
                         Secret Batch

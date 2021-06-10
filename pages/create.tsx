@@ -111,7 +111,7 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
 
   async function uploadNFT() {
     try {
-      console.log('uploadNFT',secretNFT,name,description,select,batch,NFT);      
+      console.log('uploadNFT', secretNFT, name, description, select, batch, NFT);
       if (
         !secretNFT ||
         !name ||
@@ -130,7 +130,7 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
       const data = new FormData();
       {
         NFT ? data.append('file', NFT) : data.append('file', secretNFT);
-      } 
+      }
 
       const resUpload = await fetch(
         `${process.env.NEXT_PUBLIC_SDK_URL}/api/uploadIM`,
@@ -236,6 +236,7 @@ const CreatePage: React.FC<CreatePageProps> = ({ user }) => {
         setProcessed={setProcessed}
         setBatch={setBatch}
         batch={batch}
+        isBatch={select === 'SecretBatch'}
       />
     </>
   );
