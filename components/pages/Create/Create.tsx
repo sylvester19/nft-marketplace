@@ -11,9 +11,7 @@ import Eye from 'components/assets/eye';
 import { UserType } from 'interfaces/index';
 
 import { NFTProps } from 'pages/create';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import PerfectSlider from 'react-perfect-slider';
 
 export interface CreateProps {
   user: UserType;
@@ -71,18 +69,12 @@ const Create: React.FC<CreateProps> = ({
     setNFTData({ ...NFTData, [e.target.name]: e.target.value });
   }
   const returnBatchPreview = (batch: FileList) => {
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    return <div className={``}><Slider {...settings}>
-      {Array.from(batch).map((batchItem) => <div key={batchItem.name}>
-        <img src={URL.createObjectURL(batchItem)} className={``} />
-      </div>)}
-    </Slider>
+    return <div className={`${style.batchContainer}`}>
+      <PerfectSlider>
+        {Array.from(batch).map((batchItem) => <div key={batchItem.name}>
+          <img src={URL.createObjectURL(batchItem)} className={`${style.batchPic}`} />
+        </div>)}
+      </PerfectSlider>
     </div>
   }
   function returnType(NFTarg: File) {
@@ -224,6 +216,7 @@ const Create: React.FC<CreateProps> = ({
                       </div>
                     </div>
                     {select !== 'SecretBatch' && NFT && returnType(NFT)}
+                    {select === 'SecretBatch' && batch && batch.length > 0 && returnBatchPreview(batch)}
                     <div className={style.HiddenShell}>
                       <input
                         type="file"
@@ -251,7 +244,6 @@ const Create: React.FC<CreateProps> = ({
                     </div>
                   </label>
                 )}
-                {select === 'SecretBatch' && batch && batch.length > 0 && returnBatchPreview(batch)}
               </label>
             </div>
             <div className={style.Right}>
