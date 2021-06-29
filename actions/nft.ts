@@ -1,6 +1,6 @@
 import { NftType } from 'interfaces/index';
 
-export const getNFTS = async () => {
+/*export const getNFTS = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_NODE_API}/api/NFTs`);
   let data: NftType[] = await res.json();
   data = data.filter((item) => item.creatorData && item.ownerData);
@@ -25,7 +25,7 @@ export const getNFTS = async () => {
   });
 
   return [displayNFTs, seriesCount];
-};
+};*/
 
 export const getProfileNFTS = async (
   id: string,
@@ -95,9 +95,11 @@ export const getCreatorNFTS = async (id: string) => {
   return [displayNFTs, seriesCount];
 };
 
-export const getCategoryNFTs = async (code: string) => {
+export const getCategoryNFTs = async (codes?: string | string[]) => {
+  const queryString = !codes ? "" : (typeof codes==='string' ? `?codes=${codes}` : `?codes=${codes.join("&codes=")}`)
+  console.log(`${process.env.NEXT_PUBLIC_NODE_API}/api/NFTs/category/${queryString}`)
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_NODE_API}/api/NFTs/category/${code}`
+    `${process.env.NEXT_PUBLIC_NODE_API}/api/NFTs/category/${queryString}`
   );
 
   if (!res.ok) throw new Error('error fetching category NFTs');
